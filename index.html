@@ -327,7 +327,7 @@
     }
 
     /* CHATBOT PLACEHOLDER */
-    .chatbot-placeholder {
+    /*.chatbot-placeholder {
       margin-top: 3rem;
       padding: 1.5rem 2rem;
       border: 1px dashed rgba(212, 168, 67, 0.4);
@@ -350,7 +350,7 @@
     }
 
     /* ID placeholder for BotPenguin */
-    #botpenguin-container { /* BotPenguin widget goes here */ }
+    /*#botpenguin-container { https://page.botpenguin.com/6a1d9dbd280a7e5d0773cfcf/6a1d702bf7520ed44369020f}
 
     /* ===== ======================================= ===== */
     /* ===== PAGINA 2 – AUTORUL ===== */
@@ -961,9 +961,7 @@
 
       <!-- CHATBOT BOTPENGUIN — inserează scriptul / widgetul aici -->
       <div class="chatbot-placeholder" id="botpenguin-container">
-        <span>🤖 Chatbot BotPenguin</span>
-        Înlocuiește acest bloc cu scriptul BotPenguin furnizat de platformă.
-        ID container: <code>#botpenguin-container</code>
+        <script id="messenger-widget-b" src="https://cdn.botpenguin.com/website-bot.js" defer>6a1d9dbd280a7e5d0773cfcf,6a1d702bf7520ed44369020f</script>
       </div>
 
     </div>
@@ -1302,7 +1300,41 @@
   <footer>
     <p><strong>Enigma Otiliei</strong> — George Călinescu, 1938 &nbsp;·&nbsp; </p>
   </footer>
-
+  <!-- ══════════════════════════════════════ -->
+  <!-- CHATBOT AI — Enigma Otiliei          -->
+  <!-- ══════════════════════════════════════ -->
+  <style>
+    /* ── Floating button ── */
+    #chat-toggle {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 10000;
+      width: 58px; height: 58px;
+      background: var(--dark-brown); border: 2px solid var(--gold); border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      animation: chatPulse 3s infinite; transition: transform 0.2s;
+    }
+    #chat-toggle:hover { transform: scale(1.08); }
+    #chat-toggle svg { width: 26px; height: 26px; fill: var(--gold); }
+    #chat-badge {
+      position: absolute; top: -4px; right: -4px;
+      width: 18px; height: 18px; background: var(--rose); border-radius: 50%;
+      border: 2px solid var(--dark-brown);
+      font-family: 'Cinzel', serif; font-size: 9px; color: white;
+      display: flex; align-items: center; justify-content: center;
+    }
+    @keyframes chatPulse {
+      0%   { box-shadow: 0 4px 20px rgba(0,0,0,.5), 0 0 0 0 rgba(212,168,67,.4); }
+      70%  { box-shadow: 0 4px 20px rgba(0,0,0,.5), 0 0 0 12px rgba(212,168,67,0); }
+      100% { box-shadow: 0 4px 20px rgba(0,0,0,.5), 0 0 0 0 rgba(212,168,67,0); }
+    }
+ 
+    
+  </style>
+ 
+  
+ 
+  
+ 
 
   <!-- SCROLL REVEAL SCRIPT -->
   <script>
