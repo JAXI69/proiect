@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enigma Otiliei</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --cream: #f5efe0;
+      --parchment: #e8dcc8;
+      --sepia: #c9a96e;
+      --sepia-dark: #8b6914;
+      --brown: #5c3d1e;
+      --dark-brown: #2e1a0e;
+      --ink: #1a1008;
+      --gold: #d4a843;
+      --gold-light: #e8c97a;
+      --rose: #c17c74;
+      --rose-dark: #9e5c55;
+      --shadow: rgba(46, 26, 14, 0.25);
+      --text-body: #3d2b14;
+      --text-muted: #7a6245;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--text-body);
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ===== NOISE TEXTURE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(30, 15, 5, 0.97);
+      border-bottom: 2px solid var(--gold);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-brand {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--parchment);
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid transparent;
+      border-radius: 1px;
+      transition: all 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(212, 168, 67, 0.08);
+    }
+
+    /* ===== ORNAMENT ===== */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+
+    .ornament::before, .ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--sepia));
+    }
+
+    .ornament::after {
+      background: linear-gradient(to left, transparent, var(--sepia));
+    }
+
+    .ornament span {
+      color: var(--sepia-dark);
+      font-size: 1.4rem;
+    }
+
+    /* ===== PAGES (SECTIONS) ===== */
+    .page {
+      min-height: 100vh;
+      padding: 100px 0 60px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== PAGE HEADERS ===== */
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sepia-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-style: italic;
+      color: var(--dark-brown);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ===== ======================================= ===== */
+    /* ===== PAGINA 1 – ACASĂ ===== */
+    /* ===== ======================================= ===== */
+
+    #acasa {
+      background: var(--dark-brown);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 80px 2rem 60px;
+    }
+
+    #acasa::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(201, 169, 110, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(193, 124, 116, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, rgba(212, 168, 67, 0.08) 0%, transparent 55%);
+    }
+
+    /* Decorative corner flourishes */
+    #acasa::after {
+      content: '';
+      position: absolute;
+      top: 80px; left: 20px; right: 20px; bottom: 20px;
+      border: 1px solid rgba(212, 168, 67, 0.2);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+
+    .hero-divider {
+      width: 120px;
+      height: 1px;
+      background: var(--sepia);
+      margin: 1.5rem auto;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+
+    .hero-divider::before {
+      content: '◆';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--dark-brown);
+      padding: 0 0.5rem;
+      color: var(--gold);
+      font-size: 0.6rem;
+    }
+
+    /* NUMERE / FACTS */
+    .hero-numbers {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin: 2.5rem 0;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.9s forwards;
+    }
+
+    .hero-num {
+      flex: 1;
+      max-width: 180px;
+      padding: 1.5rem 1rem;
+      border: 1px solid rgba(212, 168, 67, 0.25);
+      border-right: none;
+      text-align: center;
+      cursor: default;
+      transition: background 0.3s;
+    }
+
+    .hero-num:last-child { border-right: 1px solid rgba(212, 168, 67, 0.25); }
+
+    .hero-num:hover { background: rgba(212, 168, 67, 0.07); }
+
+    .hero-num-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-num-label {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.75rem;
+      color: var(--sepia);
+      letter-spacing: 0.1em;
+      font-style: italic;
+    }
+
+    .hero-desc {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--parchment);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.1s forwards;
+      line-height: 1.9;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--dark-brown);
+      background: var(--gold);
+      padding: 0.9rem 2.5rem;
+      text-decoration: none;
+      border: 1px solid var(--gold);
+      transition: all 0.3s;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.3s forwards;
+    }
+
+    .hero-cta:hover {
+      background: transparent;
+      color: var(--gold);
+    }
+
+    /* CHATBOT PLACEHOLDER */
+    .chatbot-placeholder {
+      margin-top: 3rem;
+      padding: 1.5rem 2rem;
+      border: 1px dashed rgba(212, 168, 67, 0.4);
+      border-radius: 2px;
+      color: var(--sepia);
+      font-size: 0.85rem;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.5s forwards;
+      text-align: center;
+    }
+
+    .chatbot-placeholder span {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ID placeholder for BotPenguin */
+    #botpenguin-container { /* BotPenguin widget goes here */ }
+
+    /* ===== ======================================= ===== */
+    /* ===== PAGINA 2 – AUTORUL ===== */
+    /* ===== ======================================= ===== */
+
+    #autorul {
+      background: var(--parchment);
+      padding: 100px 0 80px;
+      position: relative;
+    }
+
+    #autorul::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(to right, transparent, var(--sepia), var(--gold), var(--sepia), transparent);
+    }
+
+    .author-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .author-image-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .author-photo-frame {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--brown);
+      border: 3px solid var(--sepia);
+      box-shadow: 8px 8px 0 var(--sepia-dark), inset 0 0 40px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .author-photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(212, 168, 67, 0.4);
+    }
+
+    .photo-placeholder {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--sepia);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .photo-placeholder::before {
+      content: '🖼';
+      display: block;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      filter: grayscale(1) opacity(0.4);
+    }
+
+    .author-photos-small {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      width: 100%;
+    }
+
+    .photo-small {
+      aspect-ratio: 1;
+      background: var(--brown);
+      border: 2px solid var(--sepia);
+      box-shadow: 4px 4px 0 var(--sepia-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sepia);
+      font-size: 1.5rem;
+    }
+
+    .author-text h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--sepia-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .author-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--dark-brown);
+      margin-bottom: 0.3rem;
+    }
+
+    .author-years {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--sepia-dark);
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+    }
+
+    .author-text p {
+      color: var(--text-body);
+      margin-bottom: 1rem;
+    }
+
+    .author-text p:first-of-type::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      float: left;
+      line-height: 0.8;
+      margin: 0.05em 0.1em 0 0;
+      color: var(--sepia-dark);
+    }
+
+    .author-info-box {
+      background: var(--cream);
+      border-left: 3px solid var(--gold);
+      padding: 1.2rem 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .author-info-box h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--sepia-dark);
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .info-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .info-label {
+      color: var(--sepia-dark);
+      font-style: italic;
+      min-width: 100px;
+    }
+
+    .info-value { color: var(--text-body); }
+
+    /* ===== ======================================= ===== */
+    /* ===== PAGINA 3 – PERSONAJE ===== */
+    /* ===== ======================================= ===== */
+
+    #personaje {
+      background: var(--cream);
+      padding: 100px 0 80px;
+      position: relative;
+    }
+
+    #personaje::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(to right, transparent, var(--rose), var(--gold), var(--rose), transparent);
+    }
+
+    .characters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .character-card {
+      border: 1px solid var(--sepia);
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--parchment) 0%, var(--cream) 100%);
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .character-card::before {
+      content: '';
+      position: absolute;
+      top: 6px; left: 6px; right: -6px; bottom: -6px;
+      border: 1px solid var(--sepia);
+      z-index: -1;
+      transition: all 0.3s;
+    }
+
+    .character-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--sepia);
+    }
+
+    .character-card:hover::before {
+      opacity: 0;
+    }
+
+    .char-role {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--rose-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .char-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-style: italic;
+      color: var(--dark-brown);
+      margin-bottom: 0.2rem;
+    }
+
+    .char-trait {
+      font-size: 0.85rem;
+      color: var(--sepia-dark);
+      font-style: italic;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--parchment);
+    }
+
+    .char-desc {
+      font-size: 0.95rem;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    .char-symbol {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 2rem;
+      opacity: 0.15;
+    }
+
+    /* Importanța personajelor */
+    .importance-section {
+      background: var(--dark-brown);
+      padding: 3rem;
+      position: relative;
+    }
+
+    .importance-section::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(212, 168, 67, 0.25);
+      pointer-events: none;
+    }
+
+    .importance-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .importance-section p {
+      color: var(--parchment);
+      max-width: 750px;
+      margin: 0 auto;
+      text-align: center;
+      font-style: italic;
+      font-size: 1.05rem;
+    }
+
+    /* ===== ======================================= ===== */
+    /* ===== PAGINA 4 – TEMA ===== */
+    /* ===== ======================================= ===== */
+
+    #tema {
+      background: var(--parchment);
+      padding: 100px 0 80px;
+      position: relative;
+    }
+
+    #tema::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(to right, transparent, var(--brown), var(--sepia-dark), var(--brown), transparent);
+    }
+
+    .themes-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .theme-block {
+      padding: 2.5rem;
+      background: var(--cream);
+      border: 1px solid var(--sepia);
+      position: relative;
+    }
+
+    .theme-block::after {
+      content: '';
+      position: absolute;
+      bottom: -5px; right: -5px;
+      width: 100%; height: 100%;
+      border: 1px solid var(--sepia);
+      z-index: -1;
+    }
+
+    .theme-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .theme-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-style: italic;
+      color: var(--dark-brown);
+      margin-bottom: 0.5rem;
+    }
+
+    .theme-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--sepia-dark);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--parchment);
+    }
+
+    .theme-block p {
+      color: var(--text-body);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 0.8rem;
+    }
+
+    .theme-quote {
+      border-left: 3px solid var(--gold);
+      padding: 0.8rem 1.2rem;
+      margin-top: 1.5rem;
+      font-style: italic;
+      color: var(--sepia-dark);
+      font-size: 0.9rem;
+    }
+
+    /* ===== ======================================= ===== */
+    /* ===== PAGINA 5 – REZUMAT ===== */
+    /* ===== ======================================= ===== */
+
+    #rezumat {
+      background: var(--dark-brown);
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #rezumat::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 10% 90%, rgba(193, 124, 116, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 10%, rgba(201, 169, 110, 0.1) 0%, transparent 50%);
+    }
+
+    #rezumat .page-title { color: var(--cream); }
+    #rezumat .page-tag { color: var(--gold); }
+
+    .rezumat-inner { position: relative; z-index: 1; }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--sepia), var(--gold), var(--sepia), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding: 1.5rem 2rem;
+      background: rgba(245, 239, 224, 0.05);
+      border: 1px solid rgba(201, 169, 110, 0.2);
+      transition: background 0.3s;
+    }
+
+    .timeline-item:hover {
+      background: rgba(245, 239, 224, 0.08);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -3.5rem;
+      top: 1.8rem;
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--dark-brown), 0 0 0 4px var(--sepia);
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: -3rem;
+      top: 2.2rem;
+      width: 2.5rem;
+      height: 1px;
+      background: var(--sepia);
+    }
+
+    .timeline-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item p {
+      color: var(--parchment);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Final */
+    .final-section {
+      border: 1px solid rgba(212, 168, 67, 0.35);
+      padding: 3rem;
+      position: relative;
+      text-align: center;
+    }
+
+    .final-section::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(212, 168, 67, 0.15);
+      pointer-events: none;
+    }
+
+    .final-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .final-section p {
+      color: var(--parchment);
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+      font-style: italic;
+    }
+
+    .final-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--sepia);
+      text-transform: uppercase;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--ink);
+      padding: 2.5rem;
+      text-align: center;
+      border-top: 2px solid var(--sepia-dark);
+    }
+
+    footer p {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    footer strong {
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s, transform 0.7s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .author-grid { grid-template-columns: 1fr; }
+      .themes-layout { grid-template-columns: 1fr; }
+      .hero-numbers { flex-wrap: wrap; }
+      .hero-num { min-width: 120px; }
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="#acasa" class="nav-brand">Enigma Otiliei</a>
+    <ul class="nav-links">
+      <li><a href="#acasa">Acasă</a></li>
+      <li><a href="#autorul">Autorul</a></li>
+      <li><a href="#personaje">Personaje</a></li>
+      <li><a href="#tema">Tema</a></li>
+      <li><a href="#rezumat">Rezumat</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ====================== -->
+  <!-- PAGINA 1 – ACASĂ       -->
+  <!-- ====================== -->
+  <section id="acasa">
+    <div class="hero-inner">
+
+      <p class="hero-eyebrow">Roman realist — George Călinescu</p>
+
+      <h1 class="hero-title">Enigma<br>Otiliei</h1>
+
+      <p class="hero-subtitle">București, anii 1909–1911</p>
+
+      <p class="hero-subtitle">Gologan Maria <br> Dumea Daria</p>
+
+      <div class="hero-divider"></div>
+
+      <!-- NUMERE / POZE CU ROMANUL (înlocuiește textul cu ce ai nevoie) -->
+      <div class="hero-numbers">
+        <div class="hero-num">
+          <span class="hero-num-value">1938</span>
+          <span class="hero-num-label">Anul publicării</span>
+        </div>
+        <div class="hero-num">
+          <span class="hero-num-value">3</span>
+          <span class="hero-num-label">Volume originale</span>
+        </div>
+        <div class="hero-num">
+          <span class="hero-num-value">~30</span>
+          <span class="hero-num-label">Personaje</span>
+        </div>
+        <div class="hero-num">
+          <span class="hero-num-value">1915</span>
+          <span class="hero-num-label">Strada Antim, Buc.</span>
+        </div>
+      </div>
+
+      <p class="hero-desc">
+        „Enigma Otiliei" este capodopera lui George Călinescu — un roman al moștenirii,
+        al iubirii imposibile și al misterului feminin, desfășurat pe fondul Bucureștiului burghez
+        de la începutul secolului XX.
+      </p>
+
+      <a href="#autorul" class="hero-cta">Explorează romanul</a>
+
+      <!-- CHATBOT BOTPENGUIN — inserează scriptul / widgetul aici -->
+      <div class="chatbot-placeholder" id="botpenguin-container">
+        <span>🤖 Chatbot BotPenguin</span>
+        Înlocuiește acest bloc cu scriptul BotPenguin furnizat de platformă.
+        ID container: <code>#botpenguin-container</code>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ====================== -->
+  <!-- PAGINA 2 – AUTORUL     -->
+  <!-- ====================== -->
+  <section id="autorul">
+    <div class="container">
+      <div class="page-header reveal">
+        <p class="page-tag">Pagina 2</p>
+        <h2 class="page-title">Autorul</h2>
+      </div>
+      <div class="ornament reveal"><span>✦</span></div>
+
+      <div class="author-grid">
+
+        <!-- Coloana cu poze -->
+        <div class="author-image-col reveal">
+          <div class="author-photo-frame">
+            <div class="photo-placeholder">
+                <img src="george-calinescu.jpg" alt="George Călinescu" style="width: 100%; height: auto; object-fit: cover;">
+                
+              Inserează o fotografie<br>a lui George Călinescu
+            </div>
+          </div>
+
+          <!-- Poze suplimentare cu autorul -->
+          <div class="author-photos-small">
+            <div class="photo-small">
+                <img src="george-calinescu2.jpg" alt="George Călinescu tânăr" style="width: 100%; height: auto; object-fit: cover;">
+                </div>
+            <div class="photo-small">
+              <img src="George-Calinescu3.jpg" alt="George Călinescu în anii maturității" style="width: 100%; height: auto; object-fit: cover;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Coloana cu text -->
+        <div class="author-text reveal">
+          <h3>Scriitor · Critic · Academician</h3>
+          <h2>George Călinescu</h2>
+          <p class="author-years">1899 — 1965</p>
+
+          <p>
+            George Călinescu s-a născut pe 19 iunie 1899 la București și a devenit una
+            dintre cele mai complexe și controversate personalități ale culturii române.
+            Critic literar de excepție, romancier, poet, dramaturg și om de știință,
+            el a marcat definitiv literatura română a secolului XX.
+          </p>
+
+          <p>
+            Capodopera sa romanescă, <em>Enigma Otiliei</em>, publicată în 1938, este
+            considerată cel mai important roman realist-obiectiv din literatura română,
+            inspirat din romanul balzacian și din observarea acută a societății bucureștene
+            interbelice.
+          </p>
+
+          <p>
+            Pe lângă activitatea literară, Călinescu este autorul monumentalei
+            <em>Istorii a literaturii române de la origini până în prezent</em> (1941),
+            o lucrare de referință unică în cultura noastră.
+          </p>
+
+          <div class="author-info-box">
+            <h4>Date biografice</h4>
+            <div class="info-row">
+              <span class="info-label">Născut:</span>
+              <span class="info-value">19 iunie 1899, București</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Decedat:</span>
+              <span class="info-value">12 martie 1965, București</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Cetățenie:</span>
+              <span class="info-value">Română</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Ocupație:</span>
+              <span class="info-value">Scriitor, critic literar, academician</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Opere:</span>
+              <span class="info-value">Enigma Otiliei, Bietul Ioanide, Scrinul negru</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================== -->
+  <!-- PAGINA 3 – PERSONAJE   -->
+  <!-- ====================== -->
+  <section id="personaje">
+    <div class="container">
+      <div class="page-header reveal">
+        <p class="page-tag">Pagina 3</p>
+        <h2 class="page-title">Personajele</h2>
+      </div>
+      <div class="ornament reveal"><span>♥</span></div>
+
+      <!-- Personajele principale -->
+      <div class="characters-grid">
+
+        <div class="character-card reveal">
+          <span class="char-symbol">✦</span>
+          <p class="char-role">Personaj principal feminin</p>
+          <h3 class="char-name">Otilia Mărculescu</h3>
+          <p class="char-trait">„Veșnic tânără, veșnic enigmatică"</p>
+          <p class="char-desc">
+            Otilia este pupila lui moș Costache — un personaj feminin inefabil, capricios
+            și profund liber. Ea întruchipează femeia modernă: spontană, inteligentă,
+            liberă de convențiile sociale ale epocii. Enigma ei rămâne nedescifrată
+            până la final.
+          </p>
+        </div>
+
+        <div class="character-card reveal">
+          <span class="char-symbol">♦</span>
+          <p class="char-role">Personaj principal masculin</p>
+          <h3 class="char-name">Felix Sima</h3>
+          <p class="char-trait">„Tânărul dornic de cunoaștere și iubire"</p>
+          <p class="char-desc">
+            Felix este un tânăr student la medicină, orfan, sosit la București pe strada
+            Antim. Îndrăgostit de Otilia, el este perspectiva prin care cititorul descoperă
+            lumea romanului. Reprezintă omul în formare, oscilând între rațiune și sentiment.
+          </p>
+        </div>
+
+        <div class="character-card reveal">
+          <span class="char-symbol">⚖</span>
+          <p class="char-role">Personaj secundar central</p>
+          <h3 class="char-name">Costache Giurgiuveanu</h3>
+          <p class="char-trait">„Avarul sentimental"</p>
+          <p class="char-desc">
+            Bătrânul tutore al Otiliei, un avar tipic balzacian — zgârcit, slab de caracter,
+            incapabil să ia decizii. Oscilând între dragostea față de Otilia și teama de
+            a-și pierde averea, el devine victima propriei indecizii.
+          </p>
+        </div>
+
+        <div class="character-card reveal">
+          <span class="char-symbol">🌹</span>
+          <p class="char-role">Personaj antagonist</p>
+          <h3 class="char-name">Aglae Tulea</h3>
+          <p class="char-trait">„Vipera familiei"</p>
+          <p class="char-desc">
+            Sora lui Costache, Aglae este prototipul femeii rele, avide, intrigante.
+            Ea uneltește neobosit împotriva Otiliei, dorind să pună mâna pe averea
+            fratelui ei. Reprezintă forța distructivă a lăcomiei.
+          </p>
+        </div>
+
+        <div class="character-card reveal">
+          <span class="char-symbol">💰</span>
+          <p class="char-role">Personaj secundar</p>
+          <h3 class="char-name">Pascalopol</h3>
+          <p class="char-trait">„Moșierul generos și înțelept"</p>
+          <p class="char-desc">
+            Un moșier matur, rafinat și elegant, admirator sincer al Otiliei. Pascalopol
+            îi oferă Otiliei securitate și lume bună, ceea ce Felix nu poate. Reprezintă
+            lumea stabilă, confortabilă, dar rece a maturității.
+          </p>
+        </div>
+
+        <div class="character-card reveal">
+          <span class="char-symbol">📖</span>
+          <p class="char-role">Personaj secundar</p>
+          <h3 class="char-name">Stănică Rațiu</h3>
+          <p class="char-trait">„Arivistul dezinvolt"</p>
+          <p class="char-desc">
+            Un personaj comic și moralmente dubios — avocat șarlatan, ginerele Aglaei,
+            maestru al simulacrului social. Stănică Rațiu este un tip uman veșnic actual:
+            oportunistul care reușește printr-o combinație de șarm și lipsă de scrupule.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Importanța personajelor -->
+      <div class="importance-section reveal">
+        <h3>Importanța personajelor</h3>
+        <p>
+          Romanul lui Călinescu este, în esența sa, un studiu de caractere. Fiecare personaj
+          este construit cu meticulozitate balzaciană — ei nu sunt simboluri, ci oameni vii,
+          cu contradicții, slăbiciuni și momente de grație. Prin galeria lor, Călinescu
+          disecă societatea burgheză românească de la 1909, relevând cum lăcomia, iubirea,
+          indiferența și ambiția modelează destine.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ====================== -->
+  <!-- PAGINA 4 – TEMA        -->
+  <!-- ====================== -->
+  <section id="tema">
+    <div class="container">
+      <div class="page-header reveal">
+        <p class="page-tag">Pagina 4</p>
+        <h2 class="page-title">Temele Romanului</h2>
+      </div>
+      <div class="ornament reveal"><span>◆</span></div>
+
+      <div class="themes-layout">
+
+        <!-- TEMA MOȘTENIRII -->
+        <div class="theme-block reveal">
+          <span class="theme-icon">⚖️</span>
+          <h3 class="theme-title">Tema moștenirii</h3>
+          <p class="theme-subtitle">Averea, lăcomia și dreptul de a moșteni</p>
+          <p>
+            Conflictul central al romanului gravitează în jurul averii lui Costache Giurgiuveanu.
+            Moștenirea devine un câmp de bătaie pe care se înfruntă interese, rude și
+            sentimente. Cine are dreptul moral și legal să moștenească?
+          </p>
+          <p>
+            Lăcomia Aglaei, calculele lui Stănică, indolența lui Costache și
+            neputința lui Felix de a interveni — toate se coagulează în jurul
+            acestei teme fundamentale. Călinescu arată că banii corup relațiile
+            și deformează caractere.
+          </p>
+          <div class="theme-quote">
+            „Omul e stăpânit de avere, nu averea de om."
+          </div>
+        </div>
+
+        <!-- TEMA IUBIRII -->
+        <div class="theme-block reveal">
+          <span class="theme-icon">🌹</span>
+          <h3 class="theme-title">Tema iubirii</h3>
+          <p class="theme-subtitle">Dragoste, alegere și enigmă feminină</p>
+          <p>
+            Iubirea lui Felix pentru Otilia este pasională, idealistă, dar sortită eșecului.
+            Otilia alege în cele din urmă securitatea oferită de Pascalopol. Această
+            alegere nu este o trădare, ci expresia libertății ei de a fi ea însăși.
+          </p>
+          <p>
+            Tema iubirii se îmbină cu cea a misterului feminin. Otilia rămâne
+            nedefinibilă — enigma ei nu se rezolvă niciodată complet. Ea este
+            simultan victorină și modernă, sentimentală și pragmatică.
+          </p>
+          <div class="theme-quote">
+            „Otilia era enigma lui, a tuturor."
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ====================== -->
+  <!-- PAGINA 5 – REZUMAT     -->
+  <!-- ====================== -->
+  <section id="rezumat">
+    <div class="container rezumat-inner">
+      <div class="page-header reveal">
+        <p class="page-tag">Pagina 5</p>
+        <h2 class="page-title">Rezumatul Acțiunii</h2>
+      </div>
+      <div class="ornament reveal" style="--sepia: rgba(201,169,110,0.5)"><span style="color: var(--gold)">✦</span></div>
+
+      <!-- Descriere pe scurt a acțiunii -->
+      <div class="timeline reveal">
+
+        <div class="timeline-item">
+          <p class="timeline-label">Expoziția</p>
+          <h3>Sosirea lui Felix pe strada Antim</h3>
+          <p>
+            Vara lui 1909. Tânărul Felix Sima sosește la București, la casa tutorelui
+            său, Costache Giurgiuveanu. Aici îl descoperă pe bătrânul avar, pe familia
+            Tulea cu intrigile ei, și mai ales pe fascinanta Otilia Mărculescu.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <p class="timeline-label">Intriga</p>
+          <h3>Iubire, rivalitate și uneltiri</h3>
+          <p>
+            Felix se îndrăgostește de Otilia, dar rivalul său este Pascalopol, moșierul
+            matur. Familia Tulea, condusă de Aglae, uneltește pentru a pune mâna pe
+            averea lui Costache, sabotând orice posibilitate ca Otilia să fie înfiată
+            și moștenitoare legală.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <p class="timeline-label">Punctul culminant</p>
+          <h3>Moartea lui Costache și împărțirea averii</h3>
+          <p>
+            Costache moare fără a lua nicio decizie clară. Stănică Rațiu fură banii
+            ascunși. Familia Tulea preia controlul. Otilia, abandonată de protecție,
+            pleacă cu Pascalopol în străinătate — o alegere pragmatică ce destramă
+            visul lui Felix.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <p class="timeline-label">Deznodământ</p>
+          <h3>Dispersia personajelor</h3>
+          <p>
+            Anii trec. Felix devine medic de succes și se căsătorește cu o altă femeie.
+            Otilia divorțează de Pascalopol și dispare din viața lui Felix. Stănică
+            urcă social. Familia Tulea se destramă. Strada Antim rămâne cu umbrele
+            trecutului.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Finalul romanului -->
+      <div class="final-section reveal">
+        <h3>Finalul romanului</h3>
+        <p>
+          Epilogul romanului este de o melancolie profundă. Felix, privind o fotografie
+          veche a Otiliei, înțelege că enigma ei n-a putut fi niciodată desluşită și,
+          poate, nici nu trebuia să fie. Otilia a ales libertatea în locul certitudinii —
+          și tocmai aceasta o face nemuritoare.
+        </p>
+        <p class="final-tag">„Enigma Otiliei rămâne veșnic deschisă."</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>Enigma Otiliei</strong> — George Călinescu, 1938 &nbsp;·&nbsp; </p>
+  </footer>
+
+
+  <!-- SCROLL REVEAL SCRIPT -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 80) current = section.id;
+      });
+      navLinks.forEach(link => {
+        link.style.color = link.getAttribute('href') === '#' + current
+          ? 'var(--gold)' : '';
+        link.style.borderColor = link.getAttribute('href') === '#' + current
+          ? 'var(--gold)' : 'transparent';
+      });
+    });
+  </script>
+
+</body>
+</html>
